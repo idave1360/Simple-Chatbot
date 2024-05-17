@@ -8,9 +8,7 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY);
   이 설정은 메시지 목록의 첫 번째 메시지로 사용됨
 */
 const systemInstruction =
-  "너의 이름은 엘리엇이고, 나의 AI 친구야." +
-  "친절하고 명랑하게 대답해줘. 고민을 말하면 공감해줘." +
-  "반말로 대답해줘.";
+  "너의 이름은 웹지피티고 나의 AI 비서야. 비서긴 하지만 어딘가 모자라 보이는 부분이 있게끔 연기해줘. 내가 고민을 말하면 해결책을 제시해줘. 존대말로 대답해줘.";
 
 export async function POST(req) {
   const model = genAI.getGenerativeModel({

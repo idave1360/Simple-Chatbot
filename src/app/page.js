@@ -5,6 +5,32 @@ import { useEffect, useRef, useState } from "react";
 
 import { Chat } from "@/components/Chat";
 
+// firebase 관련 모듈을 불러옵니다.
+import { db } from "@/firebase";
+import {
+  collection,
+  query,
+  doc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  orderBy,
+  where,
+} from "firebase/firestore";
+
+const messageCollection = collection(db, "messages");
+
+// 메시지를 Firestore에 저장하는 함수
+const saveMessages = async (message) => {
+  try {
+    await addDoc(messageCollection, message);
+    console.log('Message saved successfully');
+  } catch (error) {
+    console.error('Error saving message: ', error);
+  }
+};
+
 export default function Home() {
   /*
     메시지 목록을 저장하는 상태로, 메시지의 형태는 다음과 같음
@@ -36,6 +62,9 @@ export default function Home() {
     const updatedMessages = [...messages, message];
     // console.log(updatedMessages);
     // console.log(updatedMessages.slice(-6));
+    
+    // 메시지를 Firestore에 저장
+      saveMessages(message);
 
     setMessages(updatedMessages);
     // 메시지 전송 중임을 표시
@@ -68,6 +97,9 @@ export default function Home() {
     }
 
     // console.log(result);
+
+    // 응답을 Firestore에 저장
+    saveMessages(result);
 
     // 로딩 상태를 해제하고, 메시지 목록에 응답을 추가
     setLoading(false);
