@@ -42,6 +42,7 @@ export default function Home() {
 
     const updatedMessages = [...messages, message];
     await saveMessages(message);
+    setMessages(updatedMessages);  // 메시지를 Firestore에 저장한 후 상태 업데이트
 
     const response = await fetch("/api/chat", {
       method: "POST",
@@ -72,8 +73,8 @@ export default function Home() {
       parts: [{ text: "자유롭게 지피티와의 대화를 시작해주세요" }],
       timestamp: new Date()
     };
-    setMessages([initialMessage]);
     await saveMessages(initialMessage);
+    setMessages([initialMessage]);  // 초기 메시지를 Firestore에 저장한 후 상태 업데이트
   };
 
   useEffect(() => {
